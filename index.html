@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Neon Merge Game</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at center, #1a1a1a, #000);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .game-container {
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      grid-gap: 10px;
+      background: #333;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px #00f2ff;
+    }
+    .tile {
+      width: 80px;
+      height: 80px;
+      background: #222;
+      border-radius: 10px;
+      font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: white;
+      transition: 0.2s;
+    }
+    .tile[data-value="2"] { background: #00f2ff; }
+    .tile[data-value="4"] { background: #00c8ff; }
+    .tile[data-value="8"] { background: #007eff; }
+    .tile[data-value="16"] { background: #004dff; }
+    .tile[data-value="32"] { background: #2d00ff; }
+    .tile[data-value="64"] { background: #5e00ff; }
+
+    button {
+      position: absolute;
+      top: 20px;
+      background: #00f2ff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 0 0 15px #00f2ff;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="resetGame()">रीसेट करें</button>
+  <div class="game-container" id="game"></div>
+
+  <script>
+    const gridSize = 4;
+    const gameEl = document.getElementById('game');
+
+    function getRandomTileValue() {
+      return Math.random() > 0.5 ? 2 : 4;
+    }
+
+    function createTile(value) {
+      const tile = document.createElement('div');
+      tile.className = 'tile';
+      tile.dataset.value = value;
+      tile.textContent = value;
+      return tile;
+    }
+
+    function setupGame() {
+      gameEl.innerHTML = '';
+      for (let i = 0; i < gridSize * gridSize; i++) {
+        const value = Math.random() < 0.3 ? getRandomTileValue() : '';
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        if (value) {
+          tile.dataset.value = value;
+          tile.textContent = value;
+        }
+        gameEl.appendChild(tile);
+      }
+    }
+
+    function resetGame() {
+      setupGame();
+    }
+
+    setupGame();
+  </script>
+</body>
+</html>
